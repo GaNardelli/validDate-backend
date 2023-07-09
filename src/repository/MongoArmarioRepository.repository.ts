@@ -42,7 +42,12 @@ export default class MongoArmarioRepository implements IArmarioRepository {
   async adicionarProdutoAoArmario(
     payload: DTOAdicionarProdutoArmario
   ): Promise<DTOResponse> {
-    throw new Error("Method not implemented.");
+    const collection = await this.mongoConnection._connectToDB();
+    const findAndUpdate = await collection.updateOne(
+      { id: payload.armario.id },
+      { $push: { produtosDoArmario: payload.produto } }
+    );
+    return this.response.success(findAndUpdate);
   }
   async createArmario(armario: Armario): Promise<DTOResponse> {
     const collection = await this.mongoConnection._connectToDB();
