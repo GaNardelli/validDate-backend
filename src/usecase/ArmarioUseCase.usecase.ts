@@ -1,4 +1,3 @@
-import { DTOAdicionarProdutoArmario } from "../dto/DTOAdicionarProdutoArmario.dto";
 import { DTOAdicionarProdutoArmarioUseCase } from "../dto/DTOAdicionarProdutoArmarioUseCase.dto";
 import { DTOArmario } from "../dto/DTOArmario.dto";
 import { DTOResponse } from "../dto/DTOResponse.dto";

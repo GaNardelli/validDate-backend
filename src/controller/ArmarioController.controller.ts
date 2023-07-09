@@ -1,7 +1,6 @@
 import { DTOArmario } from "../dto/DTOArmario.dto";
 import { DTOResponse } from "../dto/DTOResponse.dto";
 import IArmarioRepository from "../interface/IArmarioRepository.interface";
-import MemoryArmarioRepository from "../repository/MemoryArmarioRepository.repository";
 import ArmarioUseCase from "../usecase/ArmarioUseCase.usecase";
 import Response from "../service/Response.service";
 import MongoArmarioRepository from "../repository/MongoArmarioRepository.repository";
