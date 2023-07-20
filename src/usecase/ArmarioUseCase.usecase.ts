@@ -14,6 +14,15 @@ export default class ArmarioUseCase {
     this.response = new Response();
   }
   async createArmario(payload: DTOArmario) {
+    const armarioMesmoNome = await this.armarioRepository.buscaArmario({
+      nome: payload.nome,
+    });
+    if (armarioMesmoNome.data) {
+      return this.response.fail(
+        300,
+        "Erro ao criar o armário, já existe um armário com esse nome"
+      );
+    }
     const createArmario = await this.armarioRepository.createArmario(
       new Armario(payload.nome, payload.descricao ?? "")
     );
@@ -40,7 +49,7 @@ export default class ArmarioUseCase {
         armario: payload.armario,
       });
     if (adicionaProdutoResp.success == 1) {
-      return this.response.success("Produto adicionado com sucesso!");
+      return this.response.success(adicionaProdutoResp);
     }
     return this.response.fail(400, "Erro ao adicionar o produto no armario");
   }

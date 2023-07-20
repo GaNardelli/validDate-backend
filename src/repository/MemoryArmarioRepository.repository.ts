@@ -11,8 +11,17 @@ export default class MemoryArmarioRepository implements IArmarioRepository {
     this.armarios = [];
     this.response = new Response();
   }
-  buscaArmario(payload: Object): Promise<DTOResponse> {
-    throw new Error("Method not implemented.");
+  async buscaArmario(payload: {
+    nome: string;
+    descricao: string;
+  }): Promise<DTOResponse> {
+    const buscaArmarioNome = this.armarios.find(
+      (elem) => elem.nome === payload.nome
+    );
+    if (!buscaArmarioNome) {
+      return this.response.fail(300, buscaArmarioNome);
+    }
+    return this.response.success(buscaArmarioNome);
   }
   async buscaArmarioById(payload: { id: string }): Promise<DTOResponse> {
     const buscaArmarioId = this.armarios.find((elem) => elem.id == payload.id);

@@ -23,7 +23,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && jest --detectOpenHandles ./dist/test",
+    "test": "tsc && jest ./dist/test",
     "build": "tsc"
   },
   "author": "",
