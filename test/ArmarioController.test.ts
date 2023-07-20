@@ -68,6 +68,5 @@ test("Adicionando produto ao armario", async () => {
       id: idArmariotesteReps.data.data.id,
     },
   });
-  console.log(respAddProduto);
   expect(respAddProduto.statusCode).toBe(200);
 });
