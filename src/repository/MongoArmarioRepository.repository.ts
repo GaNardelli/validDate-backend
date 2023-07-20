@@ -23,7 +23,7 @@ export default class MongoArmarioRepository implements IArmarioRepository {
       nome: payload.nome,
     });
     if (findArmario) return this.response.success(findArmario);
-    return this.response.fail(400, "Erro ao buscar o armario");
+    return this.response.fail(400, findArmario);
   }
   async resetDB(): Promise<any> {
     const collection = await this.mongoConnection._connectToDB();
@@ -45,13 +45,28 @@ export default class MongoArmarioRepository implements IArmarioRepository {
     const collection = await this.mongoConnection._connectToDB();
     const findAndUpdate = await collection.updateOne(
       { id: payload.armario.id },
-      { $push: { produtosDoArmario: payload.produto } }
+      {
+        $push: {
+          produtosDoArmario: {
+            nome: payload.produto.nome,
+            dataValidade: payload.produto.dataValidade,
+            expired: payload.produto.expired,
+            quantidade: payload.produto.quantidade,
+          },
+        },
+      }
     );
+    if (!findAndUpdate) return this.response.fail(300, findAndUpdate);
     return this.response.success(findAndUpdate);
   }
   async createArmario(armario: Armario): Promise<DTOResponse> {
     const collection = await this.mongoConnection._connectToDB();
-    const respCreate = await collection.insertOne(armario);
+    const respCreate = await collection.insertOne({
+      nome: armario.nome,
+      descricao: armario.descricao,
+      id: armario.id,
+      produtosDoArmario: [],
+    });
     if (!respCreate) return this.response.fail(400, "Erro ao criar o armario");
     return this.response.success(respCreate);
   }
